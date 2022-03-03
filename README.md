@@ -68,35 +68,22 @@ Among others, the project has been built around the following Python libraries:
 <!-- START -->
 ## Getting Started
 ### Installation
-#### Option 1 - requirements.txt
-To install with ```pip``` by using the requirements.txt, one should just follow two steps:
-1. Clone the project:
-```bash
-  git clone https://github.com/salvaba94/AutoTor.git
-```
-2. Run the following command to install the dependencies:
-```bash
-  pip install -r requirements.txt
-```
 
-<p align="right"><a href="#top">Back to top</a></p>
-
-
-#### Option 2 - setup.py
+#### Option 1 - setup.py
 To install with ```pip``` by using the setup.py, one should just follow two steps:
 1. Clone the project:
 ```bash
   git clone https://github.com/salvaba94/AutoTor.git
 ```
-2. Run the following command to install the dependencies:
+2. Run the following command to install the dependencies and AutoTor:
 ```bash
   pip install .
 ```
 
 <p align="right"><a href="#top">Back to top</a></p>
 
-#### Option 3 - PyPI
-Installing from PyPI is the simplest. It only requires the following command:
+#### Option 2 - PyPI
+Installing AutoTor from PyPI is the simplest. It only requires the following command:
 
 ```bash
   pip install autotor
