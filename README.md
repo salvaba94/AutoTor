@@ -37,29 +37,20 @@
 Simple package to make requests throughout Tor in an automated way and with circuit renewal. At the moment, AutoTor is not OS-agnostic as it is tailored to Windows.
 
 ### Contents
-The major project source code files are listed below in a tree-like fashion:
-
-```bash
-    AutoTor
-      └───src
-          │   main.py
-          └───autotor
-                  autotor_base.py
-                  autotor_ip.py
-```
-
-The most important elements in the project are outlined and described as follows:
+The most important source code elements in the project are outlined and described as follows:
 * ```main.py```: Implements an example of how the library should be used.
 * AutoTor module:
   * ```autotor_base.py```: Implements a class that takes care of all the logic to automate Tor download, Tor configuration, Tor initialisation, getting request sessions, Tor circuit renewal and releasing Tor resources.
   * ```autotor_ip.py```: Implements an example class to override the request function that actually takes care of the requests. In this case, the function tries to get the IP in use by Tor. 
 
+<p align="right"><a href="#top">Back to top</a></p>
+
 ### Dependencies
 Among others, the project has been built around the following Python libraries:
 
-* [![][requests-logo]][requests-link] (>=2.27.1)
-* [![][stem-logo]][stem-link] (>=1.8.0) 
-* [![][fake-useragent-logo]][fake-useragent-link] (>=0.1.11)
+* [requests[socks]][requests-link] (>=2.27.1)
+* [stem][stem-link] (>=1.8.0) 
+* [fake-useragent][fake-useragent-link] (>=0.1.11)
 
 <p align="right"><a href="#top">Back to top</a></p>
 <!-- /ABOUT -->
@@ -159,7 +150,7 @@ Any contributions are greatly appreciated. If you have suggestions that would ma
 <p align="right"><a href="#top">Back to top</a></p>
 
 
-**If you like the project and/or any of its contents results useful to you, don't forget to give it a star! It means a lot to me 😄**
+**If you like the project and/or any of its contents results useful to you, don't forget to give it a star in [GitHub][github-repo]! It means a lot to me .**
 
 <!-- LINKS -->
 [contributors-shield]: https://img.shields.io/github/contributors/salvaba94/AutoTor.svg?style=plastic&color=0e76a8
@@ -172,11 +163,9 @@ Any contributions are greatly appreciated. If you have suggestions that would ma
 [issues-url]: https://github.com/salvaba94/AutoTor/issues
 [license-shield]: https://img.shields.io/github/license/salvaba94/AutoTor.svg?style=plastic&color=0e76a8
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[stem-logo]: https://img.shields.io/badge/Tools-Stem-informational?style=plastic&logo=stem&logoColor=white&color=0e76a8
 [stem-link]: https://stem.torproject.org/
-[requests-logo]: https://img.shields.io/badge/Tools-Requests-informational?style=plastic&logo=requests&logoColor=white&color=0e76a8
 [requests-link]: https://docs.python-requests.org/en/latest/
-[fake-useragent-logo]: https://img.shields.io/badge/Tools-Fake_UserAgent-informational?style=plastic&logo=fake_useragent&logoColor=white&color=0e76a8
 [fake-useragent-link]: https://github.com/hellysmile/fake-useragent
+[github-repo]: https://github.com/salvaba94/AutoTor
 
 <!-- /LINKS -->
