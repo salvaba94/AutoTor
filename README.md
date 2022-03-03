@@ -101,10 +101,10 @@ from autotor import TorRequests
 
 class MyClass(TorRequests):
 
-    # Override the initialisation function if needed
+    # Override the initialisation function (if needed)
     def __init__(self, tor_root = "..", another_arg = 5):
         # Initialise superclass
-        super(MyClass, self).__init__()
+        super(MyClass, self).__init__(tor_root = tor_root)
         # Initialise other parameters
         self.another_arg = another_arg
 
