@@ -124,7 +124,7 @@ class MyClass(TorRequests):
 <p align="right"><a href="#top">Back to top</a></p>
 
 #### Usage
-Once one has implemented the request method in the derived class, it can be used withing a ```with``` statement. Any opened resources will be automatically cleared upon exiting the statement.
+Once one has implemented the request method in the derived class, it can be used within a ```with``` statement. Any opened resources will be automatically cleared upon exiting the statement.
 
 ```python
 # Use request within a with statement
