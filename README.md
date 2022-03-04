@@ -34,7 +34,7 @@
 
 <!-- ABOUT -->
 ## About the Project
-Simple package to make requests throughout Tor in an automated way and with circuit renewal. At the moment, AutoTor is not OS-agnostic as it is tailored to Windows.
+Simple package to make requests throughout Tor in an automated way, with circuit renewal and randomised user-agents. It can be used to easily navigate in an anonymus way or to get information from webs. At the moment, AutoTor is not OS-agnostic as it is tailored to Windows.
 
 ### Contents
 The most important source code elements in the project are outlined and described as follows:
@@ -110,7 +110,7 @@ class MyClass(TorRequests):
         # Use the session to get information
         ...
 ```
-**Note**: In order to make the requests with another IP and user-agent just get another session and call the renew method. 
+**Note**: In order to make the requests with another IP and user-agent just get another session and call the renew method. It is also recommended to randomise the waiting time between requests.
 
 <p align="right"><a href="#top">Back to top</a></p>
 
