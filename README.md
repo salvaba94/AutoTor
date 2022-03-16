@@ -34,13 +34,13 @@
 
 <!-- ABOUT -->
 ## About the Project
-Simple package to make requests throughout Tor in an automated way, with circuit renewal and randomised user-agents. It can be used to easily navigate in an anonymus way or to get information from webs. At the moment, AutoTor is not OS-agnostic as it is tailored to Windows.
+Simple high-level API to make parallel requests throughout Tor in an automated way, with circuit renewal and randomised user-agents. It can be used to easily navigate in an anonymus way or to get information from webs. At the moment, AutoTor is not OS-agnostic as it is tailored to Windows but is expected to become compatible with, at least, Linux in the short-term.
 
 ### Contents
 The most important source code elements in the project are outlined and described as follows:
 * ```main.py```: Implements an example of how the library should be used.
 * AutoTor module:
-  * ```autotor_base.py```: Implements a class that takes care of all the logic to automate Tor download, Tor configuration, Tor initialisation, getting request sessions, Tor circuit renewal and releasing Tor resources.
+  * ```autotor_base.py```: Implements a class that takes care of all the logic to automate Tor download, Tor configuration, Tor initialisation, getting request sessions, Tor circuit renewal, releasing Tor resources and performing parallel runs with a pool of threads.
   * ```autotor_ip.py```: Implements an example class to override the request function that actually takes care of the requests. In this case, the function tries to get the IP in use by Tor. 
 
 <p align="right"><a href="#top">Back to top</a></p>
@@ -85,29 +85,37 @@ Installing AutoTor from PyPI is the simplest. It only requires the following com
 ### Coding
 
 #### Create your class
-The main class of the package is TorRequests. It is a class with an abstract method ```request``` that should be implemented in any derived class to customise the request as desired by the user. Below is the metacode for a sample implementation 
+The main class of the package is ```TorRequests```. It is a class with an abstract method ```request``` that should be implemented in any derived class to customise the request as desired by the user. ```TorIP``` is an example class illustrating how the derived class could be potentially implemented. Below is the metacode for a sample implementation:
 
 ```python
 from autotor import TorRequests
+from threading import Lock
+
+GLOBAL_LOCK = Lock()
 
 class MyClass(TorRequests):
 
-    # Override the initialisation function (if needed)
-    def __init__(self, tor_root = "..", another_arg = 5):
-        # Initialise superclass
-        super(MyClass, self).__init__(tor_root = tor_root)
-        # Initialise other parameters
+    # Override the initialisation function (if needed).
+    def __init__(self, another_arg = 5, *args, **kwargs):
+        # Initialise superclass.
+        super(MyClass, self).__init__(*args, **kwargs)
+        # Initialise other parameters.
         self.another_arg = another_arg
 
-    # Override the request function and implement custom functionality
-    def request(self):
+    # Override the request function and implement custom functionality. 
+    # This function gets as inputs the elements the current thread should 
+    # take care of and the ID of the current thread. Naturally, the 
+    # function should be thread-safe.
+    def request(self, elem, n_id):
         
-        # Get Tor session
-        session = self.get_tor_session()
-        # Renew Tor circuit
-        self.renew_tor_ip()
+        # Get Tor session.
+        session = self.get_tor_session(n_id)
+        # Renew Tor circuit.
+        self.renew_tor_ip(n_id)
 
-        # Use the session to get information
+        # Use the session to get information.
+        # Use elem to characterise the differences between requests.
+        # Use GLOBAL_LOCK to handle non-atomic operations.
         ...
 ```
 **Note**: In order to make the requests with another IP and user-agent just get another session and call the renew method. It is also recommended to randomise the waiting time between requests.
@@ -115,12 +123,16 @@ class MyClass(TorRequests):
 <p align="right"><a href="#top">Back to top</a></p>
 
 #### Usage
-Once one has implemented the request method in the derived class, it can be used within a ```with``` statement. Any opened resources will be automatically cleared upon exiting the statement.
+Once one has implemented the request method in the derived class, one can use the threaded request version within a ```with``` statement to implicitly call the request method. Any opened resources will be automatically cleared upon exiting the statement.
 
 ```python
-# Use request within a with statement
-with MyClass(tor_root = ".", another_arg = 20) as tor:
-    tor.request()
+from autotor import MyClass
+import numpy as np
+
+# Use threaded_request within a with statement. This function will 
+# take care of allocating the list of requests among the thread pool.
+with MyClass(another_arg = 20, n_process = 5, tor_root = ".") as tor:
+    result = tor.threaded_request(np.arange(10))
 ```
 
 <p align="right"><a href="#top">Back to top</a></p>
@@ -149,6 +161,7 @@ Any contributions are greatly appreciated. If you have suggestions that would ma
 
 <p align="right"><a href="#top">Back to top</a></p>
 
+**Disclaimer:** The authors won't be hold accountable of any irresponsible misuse of the high-level API as per the [MIT License][license-url]. So, use it with care.
 
 **If you like the project and/or any of its contents results useful to you, don't forget to give it a star in [GitHub][github-repo]! It means a lot to me .**
 
@@ -162,7 +175,7 @@ Any contributions are greatly appreciated. If you have suggestions that would ma
 [issues-shield]: https://img.shields.io/github/issues/salvaba94/AutoTor.svg?style=plastic&color=0e76a8
 [issues-url]: https://github.com/salvaba94/AutoTor/issues
 [license-shield]: https://img.shields.io/github/license/salvaba94/AutoTor.svg?style=plastic&color=0e76a8
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[license-url]: https://github.com/salvaba94/AutoTor/blob/main/LICENSE
 [stem-link]: https://stem.torproject.org/
 [requests-link]: https://docs.python-requests.org/en/latest/
 [fake-useragent-link]: https://github.com/hellysmile/fake-useragent
