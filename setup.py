@@ -4,14 +4,16 @@ import os.path
 source = "src"
 pkg = "autotor"
 
-with open("README.md", "r") as f:
+setup_dir = os.path.dirname(__file__)
+
+with open(os.path.join(setup_dir, "README.md"), "r") as f:
     long_description = f.read()
 
-with open("requirements.txt", "r") as f:
+with open(os.path.join(setup_dir, "requirements.txt"), "r") as f:
     required = f.read().splitlines()
 
 metadata = {}
-with open(os.path.join(source, pkg, "_metadata.py")) as f:
+with open(os.path.join(setup_dir, source, pkg, "_metadata.py")) as f:
      exec(f.read(), metadata)
 
     
