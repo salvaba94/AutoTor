@@ -46,7 +46,7 @@ class TorRequests(ABC):
         ----------
         tor_link : str, optional
             Link from which to download Tor Windows Expert Bundle. Default is 
-            "https://www.torproject.org/dist/torbrowser/11.0.6/tor-win32-0.4.6.9.zip".
+            "https://archive.torproject.org/tor-package-archive/torbrowser/13.0.9/tor-expert-bundle-windows-x86_64-13.0.9.tar.gz".
         tor_root : str, optional
             Tor root path. Default is "..".
         n_process : int, optional
