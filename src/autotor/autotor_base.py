@@ -2,6 +2,7 @@ import requests
 import time
 import urllib
 import zipfile
+import tarfile 
 
 import re
 import string
@@ -34,7 +35,7 @@ class TorRequests(ABC):
     def __init__(
             self,
             tor_link: Optional[str] = 
-                "https://www.torproject.org/dist/torbrowser/11.0.6/tor-win32-0.4.6.9.zip",
+                "https://archive.torproject.org/tor-package-archive/torbrowser/13.0.9/tor-expert-bundle-windows-x86_64-13.0.9.tar.gz",
             tor_root: Optional[str] = "..",
             n_process: Optional[int] = 1
         ) -> None:
@@ -136,8 +137,12 @@ class TorRequests(ABC):
 
         if not self.__config["TOR_DIR"].joinpath("Tor").is_dir():
             zip_path, _ = urllib.request.urlretrieve(self.__config["TOR_LINK"])
-            with zipfile.ZipFile(zip_path, "r") as file:
-                file.extractall(self.__config["TOR_DIR"])
+            if self.__config["TOR_LINK"].endswith(".zip"):
+                with zipfile.ZipFile(zip_path, "r") as file:
+                    file.extractall(self.__config["TOR_DIR"])
+            elif self.__config["TOR_LINK"].endswith(".tar.gz"):
+                with tarfile.open(zip_path, "r") as file:
+                    file.extractall(self.__config["TOR_DIR"])
                 
 
     def __launch_tor(
