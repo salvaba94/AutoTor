@@ -23,7 +23,7 @@ class TorIP(TorRequests):
 
         super(TorIP, self).__init__(*args, **kwargs)
 
-        self.ip_url = "http://httpbin.org/ip"
+        self.ip_url = "https://www.marca.com/"
 
 
     def request(
